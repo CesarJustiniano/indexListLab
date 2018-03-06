@@ -25,7 +25,7 @@ public class ArrayIndexList<E> implements IndexList<E> {
 		if(size == element.length){
 			changeCapacity(CAPTOAR);
 		}
-		moveDataOnePositionTR(index, element.length-2);
+		moveDataOnePositionTR(index, size-1);
 		element[index] = e;
 		size++;
 	}
@@ -57,12 +57,16 @@ public class ArrayIndexList<E> implements IndexList<E> {
 
 	public E remove(int index) throws IndexOutOfBoundsException {
 		// ADD AND MODIFY CODE AS REQUESTED BY EXERCISES
-		if(index < 0 || index > size || isEmpty()){
+		if(index < 0 || index > size-1 || isEmpty()){
 			throw new IndexOutOfBoundsException("Index is out of bounds.");
 		}
-		this.moveDataOnePositionTL(index, element.length-1);
+		E tempElement = element[index];
+		moveDataOnePositionTL(index +1 , size-1);
 		size--;
-		return element[index];
+		if(element.length - size > MAXEMPTYPOS){
+			changeCapacity(-CAPTOAR);
+		}
+		return tempElement;
 	}
 
 
